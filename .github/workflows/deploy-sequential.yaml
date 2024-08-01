@@ -1,0 +1,40 @@
+name: Test Project
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3  
+      - name: Install NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run:  |
+          cd second-action-react  
+          npm install
+      - name: Run tests
+        run: |
+          cd second-action-react
+          npm test
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run:  |
+          cd second-action-react
+          npm install
+      - name: Build
+        run: |
+          cd second-action-react
+          npm run build
+      - name: Deploy
+        run: echo "Deploying..."
