@@ -1,0 +1,43 @@
+name: Test 4 
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3  
+      - name: Install NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run:  |
+          cd fourth-project  
+          npm install
+      - name: Install lint
+        run: |
+          cd fourth-project
+          npm run lint
+      - name: Run tests
+        run: |
+          cd fourth-project
+          npm run test
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run:  |
+          cd fourth-project
+          npm install
+      - name: Build
+        run: |
+          cd fourth-project
+          npm run build
+      - name: Deploy
+        run: echo "Deploying..."
